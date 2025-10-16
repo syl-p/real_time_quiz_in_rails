@@ -1,0 +1,3 @@
+<%= turbo_stream.update "users-list" do %>
+  <%= render partial: "games/user", collection: users, as: :user %>
+<% end %>

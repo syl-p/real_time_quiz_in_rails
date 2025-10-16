@@ -1,0 +1,6 @@
+<h1>Bienvenue sur le Game #<%= @game.id %></h1>
+<hr/>
+<h2>Liste des joueurs prêts à jouer:</h2>
+
+<%= turbo_stream_from "game_#{@game.id}", channel: "GameChannel", data: {id: @game.id} %>
+<ul id="users-list"></ul>

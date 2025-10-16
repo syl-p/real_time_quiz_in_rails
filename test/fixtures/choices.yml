@@ -1,0 +1,25 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+choice_paris:
+  question: question_one
+  label: "Paris"
+  correct: true
+
+choice_lyon:
+  question: question_one
+  label: "Lyon"
+  correct: false
+
+choice_7:
+  question: question_two
+  label: "7"
+  correct: true
+
+choice_6:
+  question: question_two
+  label: "6"
+  correct: false
