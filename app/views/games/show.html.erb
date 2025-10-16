@@ -1,6 +1,17 @@
 <h1>Bienvenue sur le Game #<%= @game.id %></h1>
 <hr/>
-<h2>Liste des joueurs prêts à jouer:</h2>
+<h2>Quizz: <%= @game.quiz.id %></h2>
 
+<% if @game.current_question %>
+  <p>Current Question: <%= @game.current_question.content %></p>
+  <ul>
+    <% @game.current_question.choices.each do |choice| %>
+      <li><%= choice.label %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<hr>
+<h2>Liste des joueurs dans cette partie:</h2>
 <%= turbo_stream_from "game_#{@game.id}", channel: "GameChannel", data: {id: @game.id} %>
 <ul id="users-list"></ul>

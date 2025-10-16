@@ -6,6 +6,7 @@ class GamesController < ApplicationController
   end
 
   def show
+    @game.current_question = @game.quiz.questions.first
   end
 
   private

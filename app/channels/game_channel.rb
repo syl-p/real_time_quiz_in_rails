@@ -4,7 +4,7 @@ class GameChannel < ApplicationCable::Channel
   include ActionView::RecordIdentifier
 
   def subscribed
-    Rails.logger.info ">>> Attempt to connect with game with id: #{params[:id]}"
+    # Rails.logger.info ">>> Attempt to connect with game with id: #{params[:id]}"
 
     @game_id = params[:id]
     @game = Game.find(params[:id])
@@ -12,13 +12,14 @@ class GameChannel < ApplicationCable::Channel
     stream_from "game_#{@game.id}"
     GameConnections.add(@game.id, current_user)
 
-    Rails.logger.info ">>> Subscribed to game #{@game.id}"
+    # Rails.logger.info ">>> Subscribed to game #{@game.id}"
 
     broadcast_join current_user
     transmit render_user_list(GameConnections.list(@game.id))
   end
 
   def unsubscribed
+    GameConnections.remove(@game.id, current_user)
     broadcast_leave current_user
   end
 
@@ -26,7 +27,6 @@ class GameChannel < ApplicationCable::Channel
   private
 
   def broadcast_join(user)
-    Rails.logger.info ">>> broadcasting append for #{@game.id} and user #{user}"
     Turbo::StreamsChannel.broadcast_append_to(
       "game_#{@game.id}",
       target: "users-list",
