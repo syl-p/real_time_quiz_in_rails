@@ -1,6 +1,6 @@
 class UserAnswer < ApplicationRecord
   belongs_to :user
-  belongs_to :question
   belongs_to :choice
-  belongs_to :game
+  belongs_to :game, touch: true
+  has_one :question, through: :choice
 end

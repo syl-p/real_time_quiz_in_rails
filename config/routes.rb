@@ -14,5 +14,8 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "quizzes#index"
   resources :quizzes, only: [ :index, :show ]
-  resources :games, only: [ :index, :show ]
+  resources :games, only: [ :index, :show ] do
+    get "/:question_id/user_answers", to: "games/user_answers#new", as: :new_user_answer
+    post "/:question_id/user_answers", to: "games/user_answers#create", as: :user_answers
+  end
 end

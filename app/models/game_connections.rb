@@ -16,12 +16,11 @@ class GameConnections
   end
 end
 =end
-
 class GameConnections
   def self.add(game_id, user)
     users_list = Rails.cache.fetch("game:#{game_id}:users") { [] }
     users_list << user
-    # users_list.uniq! {|u| u[:id]}
+    users_list.uniq!
     Rails.cache.write("game:#{game_id}:users", users_list)
   end
 

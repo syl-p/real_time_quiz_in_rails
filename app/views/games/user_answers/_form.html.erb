@@ -1,0 +1,9 @@
+<%= turbo_frame_tag "current_question" do %>
+  <%= form_with model: UserAnswer.new, url: game_user_answers_path(game_id:, question_id: question.id) do |f| %>
+    <p>Current Question: <%= question.content %></p>
+    <% question.choices.each do |choice| %>
+      <%= f.radio_button :choice_id, choice.id %> <%= choice.label %>
+    <% end %>
+    <%= f.submit "Répondre" %>
+  <% end %>
+<% end %>

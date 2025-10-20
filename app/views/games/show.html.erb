@@ -1,17 +1,14 @@
-<h1>Bienvenue sur le Game #<%= @game.id %></h1>
+<h1>Bienvenue sur la partie #<%= @game.id %></h1>
+<p>Liste des joueurs dans cette partie:</p>
+<%= turbo_stream_from "game_#{@game.id}", channel: "GameChannel", data: {id: @game.id} %>
+<ul id="users-list"></ul>
+
 <hr/>
 <h2>Quizz: <%= @game.quiz.id %></h2>
 
-<% if @game.current_question %>
-  <p>Current Question: <%= @game.current_question.content %></p>
-  <ul>
-    <% @game.current_question.choices.each do |choice| %>
-      <li><%= choice.label %></li>
-    <% end %>
-  </ul>
+<% if @game.current_question_id %>
+  <%= turbo_stream_from "game_#{@game.id}_current_question" %>
+  <%= turbo_frame_tag "current_question", src: game_new_user_answer_path(game_id: @game.id, question_id: @game.current_question_id), load: :lazy do %>
+    Chargement de la question...
+  <% end %>
 <% end %>
-
-<hr>
-<h2>Liste des joueurs dans cette partie:</h2>
-<%= turbo_stream_from "game_#{@game.id}", channel: "GameChannel", data: {id: @game.id} %>
-<ul id="users-list"></ul>

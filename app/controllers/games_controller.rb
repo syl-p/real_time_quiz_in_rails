@@ -1,12 +1,11 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: [:show]
+  before_action :set_game, only: [ :show ]
 
   def index
     @games = Game.all
   end
 
   def show
-    @game.current_question = @game.quiz.questions.first
   end
 
   private

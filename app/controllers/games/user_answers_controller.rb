@@ -1,11 +1,24 @@
 class Games::UserAnswersController < ApplicationController
+  before_action :set_game, only: [ :new, :create ]
+  before_action :set_question, only: [ :new, :create ]
+
+  def new
+  end
+
   def create
-    answer = new UserAnswer.create
+    answer = UserAnswer.new(user_answer_params)
     answer.game = @game
     answer.question = @question
-    if answer.save
+    answer.user = Current.user
 
+    if answer.save
+      flash[:success] = "Réponse enregistrée"
+    else
+      flash[:alert] = "Something went wrong"
     end
+
+    # @game.reload
+    # redirect_to game_new_user_answer_path(game_id: @game.id, question_id: @game.current_question_id)
   end
 
   private
@@ -18,6 +31,6 @@ class Games::UserAnswersController < ApplicationController
   end
 
   def user_answer_params
-
+    params.expect(user_answer: [ :choice_id ])
   end
 end
