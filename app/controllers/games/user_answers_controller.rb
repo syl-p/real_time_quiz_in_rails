@@ -3,22 +3,20 @@ class Games::UserAnswersController < ApplicationController
   before_action :set_question, only: [ :new, :create ]
 
   def new
+    @user_answer = UserAnswer.new
   end
 
   def create
-    answer = UserAnswer.new(user_answer_params)
-    answer.game = @game
-    answer.question = @question
-    answer.user = Current.user
+    @user_answer = UserAnswer.new(user_answer_params)
+    @user_answer.game = @game
+    @user_answer.user = Current.user
 
-    if answer.save
+    if @user_answer.save
       flash[:success] = "Réponse enregistrée"
+      head :ok
     else
-      flash[:alert] = "Something went wrong"
+      render :new, status: :unprocessable_entity
     end
-
-    # @game.reload
-    # redirect_to game_new_user_answer_path(game_id: @game.id, question_id: @game.current_question_id)
   end
 
   private
@@ -31,6 +29,6 @@ class Games::UserAnswersController < ApplicationController
   end
 
   def user_answer_params
-    params.expect(user_answer: [ :choice_id ])
+    params.fetch(:user_answer, {}).permit(:choice_id)
   end
 end

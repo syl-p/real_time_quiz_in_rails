@@ -1,6 +1,13 @@
+user_answer = local_assigns[:user_answer] || UserAnswer.new
+
 <%= turbo_frame_tag "current_question" do %>
-  <%= form_with model: UserAnswer.new, url: game_user_answers_path(game_id:, question_id: question.id) do |f| %>
+  <%= form_with model: user_answer,
+                url: game_user_answers_path(game_id:, question_id: question.id),
+                data: {turbo: true} do |f| %>
     <p>Current Question: <%= question.content %></p>
+    <% if user_answer.errors.present? %>
+      <blockquote><%= user_answer.errors.full_messages %></blockquote>
+    <% end %>
     <% question.choices.each do |choice| %>
       <%= f.radio_button :choice_id, choice.id %> <%= choice.label %>
     <% end %>

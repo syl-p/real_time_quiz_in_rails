@@ -31,6 +31,8 @@ class Game < ApplicationRecord
     if next_question.present?
       Rails.cache.write("game:#{id}:current_question_id", next_question.id)
       broadcast_question(next_question)
+    else
+      finish_game
     end
   end
 
@@ -39,7 +41,7 @@ class Game < ApplicationRecord
     broadcast_replace_to "game_#{id}_current_question",
                          target: "current_question",
                          partial: "games/user_answers/form",
-                         locals: { game_id: id, question: question }
+                         locals: { user_answers: UserAnswer.new, game_id: id, question: question }
   end
 
   def finish_game
