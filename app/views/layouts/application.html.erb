@@ -24,7 +24,7 @@
 
   <body>
     <% if authenticated? %>
-      Id: <%= Current.user.id %>
+      Connecté: <%= Current.user.username %>
     <% end %>
     <%= yield %>
   </body>

@@ -1,4 +1,4 @@
-user_answer = local_assigns[:user_answer] || UserAnswer.new
+<% user_answer = local_assigns[:user_answer] || UserAnswer.new %>
 
 <%= turbo_frame_tag "current_question" do %>
   <%= form_with model: user_answer,

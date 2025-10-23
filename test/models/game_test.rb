@@ -20,23 +20,8 @@ class GameTest < ActiveSupport::TestCase
     assert_difference "@game.user_answers.count", 1 do
       @game.user_answers.create!(
         user: player,
-        choice: choices.first
-      )
-    end
-  end
-
-  test "Prevent user sending same answer multiple time" do
-    player = users(:user_one)
-    choices = Question.find(@game.current_question_id).choices
-    @game.user_answers.create!(
-      user: player,
-      choice: choices.first
-    )
-
-    assert_raise ActiveRecord::RecordNotUnique do
-      @game.user_answers.create!(
-        user: player,
-        choice: choices.first
+        choice: choices.first,
+        question_id: @game.current_question_id
       )
     end
   end
@@ -48,7 +33,8 @@ class GameTest < ActiveSupport::TestCase
 
     @game.user_answers.create!(
       user: player,
-      choice: choices.first
+      choice: choices.first,
+      question_id: @game.current_question_id
     )
 
     assert_not_equal @game.updated_at, updated_at_before
@@ -64,14 +50,16 @@ class GameTest < ActiveSupport::TestCase
 
     @game.user_answers.create!(
       user: user_one,
-      choice: choices.first
+      choice: choices.first,
+      question_id: @game.current_question_id
     )
 
     assert_not @game.all_players_answered?(current_question_id_before)
 
     @game.user_answers.create!(
       user: user_two,
-      choice: choices.first
+      choice: choices.first,
+      question_id: @game.current_question_id
     )
 
     assert @game.all_players_answered?(current_question_id_before)

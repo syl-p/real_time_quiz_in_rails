@@ -9,6 +9,7 @@ class Games::UserAnswersController < ApplicationController
   def create
     @user_answer = UserAnswer.new(user_answer_params)
     @user_answer.game = @game
+    @user_answer.question = @question
     @user_answer.user = Current.user
 
     if @user_answer.save

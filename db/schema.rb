@@ -59,9 +59,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_13_132807) do
     t.integer "user_id"
     t.integer "game_id"
     t.integer "choice_id"
+    t.integer "question_id"
     t.index ["choice_id"], name: "index_user_answers_on_choice_id"
     t.index ["game_id"], name: "index_user_answers_on_game_id"
-    t.index ["user_id", "choice_id", "game_id"], name: "index_user_answers_on_user_id_and_choice_id_and_game_id", unique: true
+    t.index ["question_id"], name: "index_user_answers_on_question_id"
+    t.index ["user_id", "question_id", "game_id"], name: "index_user_answers_on_user_id_and_question_id_and_game_id", unique: true
     t.index ["user_id"], name: "index_user_answers_on_user_id"
   end
 

@@ -5,8 +5,9 @@ class CreateUserAnswers < ActiveRecord::Migration[8.0]
       t.belongs_to :user
       t.belongs_to :game
       t.belongs_to :choice
+      t.belongs_to :question
 
-      t.index [ :user_id, :choice_id, :game_id ], unique: true
+      t.index [ :user_id, :question_id, :game_id ], unique: true
     end
   end
 end
