@@ -23,9 +23,9 @@
   </head>
 
   <body>
-    <% if authenticated? %>
-      Connecté: <%= Current.user.username %>
-    <% end %>
-    <%= yield %>
+    <%= render partial: "shared/nav" %>
+    <main>
+      <%= yield %>
+    </main>
   </body>
 </html>

@@ -1,0 +1,10 @@
+<nav class="navbar container p-2 p-fixed">
+  <div class="navbar-section">
+    <%= link_to "Quiz", root_path, class:"navbar-brand mr-2" %>
+  </div>
+  <div class="navbar-section">
+    <% if authenticated? %>
+      Connecté: <%= Current.user.username %>
+    <% end %>
+  </div>
+</nav>

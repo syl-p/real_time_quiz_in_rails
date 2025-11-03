@@ -8,3 +8,20 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+.flex-1 {
+    flex: 1 1 auto;
+}
+
+.items-center {
+    align-content: center;
+}
+
+.list-unstyled {
+    margin: 0;
+    list-style-type: none;
+    li {
+        display: inline-block;
+        margin: 0;
+    }
+}

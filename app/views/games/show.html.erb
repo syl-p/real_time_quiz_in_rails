@@ -1,14 +1,19 @@
-<h1>Bienvenue sur la partie #<%= @game.id %></h1>
-<p>Liste des joueurs dans cette partie:</p>
-<%= turbo_stream_from "game_#{@game.id}", channel: "GameChannel", data: {id: @game.id} %>
-<ul id="users-list"></ul>
-
-<hr/>
-<h2>Quizz: <%= @game.quiz.id %></h2>
-
-<% if @game.current_question_id %>
-  <%= turbo_stream_from "game_#{@game.id}_current_question" %>
-  <%= turbo_frame_tag "current_question", src: game_new_user_answer_path(game_id: @game.id, question_id: @game.current_question_id), load: :lazy do %>
-    Chargement de la question...
+<header class="hero hero-sm bg-primary">
+  <div class="hero-body container">
+    <h1 class="mb-0"><%= @game.quiz.title %></h1>
+    <p class="text-secondary">Partie lancé par <%= @game.user.username %></p>
+    <div class="">
+      <p class="mb-0">Joueurs:</p>
+      <%= turbo_stream_from "game_#{@game.id}", channel: "GameChannel", data: {id: @game.id} %>
+      <ul id="users-list"></ul>
+    </div>
+  </div>
+</header>
+<section class="container" style="margin-top: -40px">
+  <% if @game.current_question_id %>
+    <%= turbo_stream_from "game_#{@game.id}_current_question" %>
+    <%= turbo_frame_tag "current_question", src: game_new_user_answer_path(game_id: @game.id, question_id: @game.current_question_id), load: :lazy do %>
+      Chargement de la question...
+    <% end %>
   <% end %>
-<% end %>
+</section>

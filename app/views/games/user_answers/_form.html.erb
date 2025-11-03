@@ -3,14 +3,21 @@
 <%= turbo_frame_tag "current_question" do %>
   <%= form_with model: user_answer,
                 url: game_user_answers_path(game_id:, question_id: question.id),
+                class: "card",
                 data: {turbo: true} do |f| %>
-    <p>Current Question: <%= question.content %></p>
-    <% if user_answer.errors.present? %>
-      <blockquote><%= user_answer.errors.full_messages %></blockquote>
-    <% end %>
-    <% question.choices.each do |choice| %>
-      <%= f.radio_button :choice_id, choice.id %> <%= choice.label %>
-    <% end %>
-    <%= f.submit "Répondre" %>
+    <div class="card-header">
+      <h2 class="mb-0"><%= question.content %></h2>
+      <% if user_answer.errors.present? %>
+        <p class="text-error mb-0"><%= user_answer.errors.full_messages %></p>
+      <% end %>
+    </div>
+    <div class="card-body">
+      <% question.choices.each do |choice| %>
+        <%= f.radio_button :choice_id, choice.id %> <%= choice.label %>
+      <% end %>
+    </div>
+    <div class="card-footer d-flex">
+      <%= f.submit "Répondre", class: "btn btn-lg btn-primary"%>
+    </div>
   <% end %>
 <% end %>
