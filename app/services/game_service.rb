@@ -41,7 +41,7 @@ class GameService
     Turbo::StreamsChannel.broadcast_replace_to "game_#{@game.id}",
                                                target: "users-list",
                                                partial: "games/users_list",
-                                               locals: {users: @game.user_in_this_game}
+                                               locals: { users: @game.user_in_this_game }
 
 
     # CHANGE QUESTION
