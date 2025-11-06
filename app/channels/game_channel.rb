@@ -15,7 +15,11 @@ class GameChannel < ApplicationCable::Channel
     # Rails.logger.info ">>> Subscribed to game #{@game.id}"
 
     broadcast_join current_user
-    transmit render_user_list(GameConnections.list(@game.id))
+
+    # TODO: DO IT BETTER
+    GameConnections.list(@game.id).each do |user|
+      broadcast_join user
+    end
   end
 
   def unsubscribed
@@ -39,13 +43,6 @@ class GameChannel < ApplicationCable::Channel
     Turbo::StreamsChannel.broadcast_remove_to(
       "game_#{@game.id}",
       target: dom_id(user)
-    )
-  end
-
-  def render_user_list(users)
-    ApplicationController.render(
-      partial: "games/users_list",
-      locals: { users: users }
     )
   end
 end

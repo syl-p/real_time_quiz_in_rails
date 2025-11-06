@@ -1,1 +1,5 @@
-<li id="<%= dom_id(user) %>"><%= user.username %></li>
+<% answer = local_assigns[:answer] || false %>
+
+<li id="<%= dom_id(user) %>">
+  <%= user.username %> <%= ' a répondu' if answer %>
+</li>

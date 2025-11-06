@@ -16,7 +16,6 @@ class GameService
 
   def set_next_question!
     n_question = next_question
-    return unless n_question.present?
 
     if n_question.present?
       Rails.cache.write(cache_key, n_question.id)
@@ -38,6 +37,14 @@ class GameService
   end
 
   def broadcast_question(question)
+    # RESET USER LIST
+    Turbo::StreamsChannel.broadcast_replace_to "game_#{@game.id}",
+                                               target: "users-list",
+                                               partial: "games/users_list",
+                                               locals: {users: @game.user_in_this_game}
+
+
+    # CHANGE QUESTION
     Turbo::StreamsChannel.broadcast_replace_to "game_#{@game.id}_current_question",
                          target: "current_question",
                          partial: "games/user_answers/form",
