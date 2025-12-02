@@ -1,5 +1,8 @@
-<ul>
-  <% @games.each do |game| %>
-    <li><%= link_to "##{game.id}", game, data: {turbo: false} %></li>
-  <% end %>
-</ul>
+<div class="container mx-auto">
+  <h1 class="text-3xl my-3">Liste des parties en cours:</h1>
+  <ul class="list-disc">
+    <% @games.each do |game| %>
+      <li><%= link_to "#{game.id} (#{game.quiz.title})", game, data: {turbo: false} %></li>
+    <% end %>
+  </ul>
+</div>

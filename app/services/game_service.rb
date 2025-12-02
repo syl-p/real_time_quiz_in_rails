@@ -1,4 +1,5 @@
 class GameService
+  # @param [Game] game
   def initialize(game)
     @game = game
   end

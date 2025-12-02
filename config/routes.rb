@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  root "quizzes#index"
+  root "games#index"
   resources :quizzes, only: [ :index, :show ]
   resources :games, only: [ :index, :show ] do
     get "/:question_id/user_answers", to: "games/user_answers#new", as: :new_user_answer
